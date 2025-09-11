@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plantilla de Apuntes - Clase de Ciberseguridad</title>
+    <style>
+         :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #06b6d4;
+            --muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03)
+        }
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: linear-gradient(180deg, #071028 0%, #071827 60%);
+            color: #e6eef6
+        }
+        
+        .wrap {
+            max-width: 980px;
+            margin: 28px auto;
+            padding: 22px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6)
+        }
+        
+        header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between
+        }
+        
+        h1 {
+            font-size: 20px;
+            margin: 0
+        }
+        
+        .meta {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+        
+        input[type=text],
+        input[type=date],
+        select,
+        textarea {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px;
+            border-radius: 8px;
+            color: inherit;
+            outline: none;
+            width: 97%;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical
+        }
+        
+        .grid {
+            display: grid;
+            gap: 18px;
+        }
+        
+        .card {
+            background: var(--card);
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03)
+        }
+        
+        .section {
+            margin-bottom: 12px
+        }
+        
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px
+        }
+        
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+        
+        .tag {
+            background: var(--glass);
+            padding: 6px 8px;
+            border-radius: 999px;
+            font-size: 12px
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px
+        }
+        
+        button {
+            background: var(--accent);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: #002;
+            cursor: pointer;
+            font-weight: 600
+        }
+        
+        .ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--muted)
+        }
+        
+        pre {
+            background: #021022;
+            padding: 12px;
+            border-radius: 8px;
+            overflow: auto
+        }
+        
+        .small {
+            font-size: 13px;
+            color: var(--muted)
+        }
+        
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+        
+        .file-preview {
+            max-height: 160px;
+            overflow: auto;
+            border-radius: 6px
+        }
+        
+        @media (max-width:880px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .meta {
+                flex-direction: column;
+                align-items: flex-start
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap" role="main">
+        <header>
+            <div>
+                <h1>Plantilla: Apuntes — Clase de Ciberseguridad</h1>
+                <div class="small">Rellena cada campo durante la clase y exporta/guarda cuando termines.</div>
+            </div>
+            <div class="meta">
+                <input id="fecha" type="date" aria-label="Fecha" />
+                <input id="clase" type="text" placeholder="Nº de clase / Tema corto" />
+                <div class="actions">
+                    <button id="export-md">Exportar .md</button>
+                    <button id="export-json" class="ghost">Exportar JSON</button>
+                    <button id="print" class="ghost">Imprimir</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid">
+            <main>
+                <section class="card section">
+                    <label for="objetivos">Objetivos de la sesión</label>
+                    <textarea id="objetivos" placeholder="Qué se espera aprender hoy..."></textarea>
+                </section>
+
+                <section class="card section">
+                    <label for="resumen">Resumen / notas principales</label>
+                    <textarea id="resumen" placeholder="Apuntes, explicaciones y observaciones..."></textarea>
+                </section>
+
+                <section class="card section">
+                    <label for="conceptos">Conceptos clave</label>
+                    <textarea id="conceptos" placeholder="Lista de conceptos (CVE, MITRE ATT&CK, OWASP, etc.)"></textarea>
+                </section>
+
+                <section class="card section">
+                    <label for="comandos">Comandos / Demo / Laboratorio</label>
+                    <textarea id="comandos" placeholder="Comandos usados, flags, snippets... Ej: nmap -sV 10.0.0.1"></textarea>
+                </section>
+
+                <section class="card section">
+                    <label for="vulns">Vulnerabilidades & Técnicas observadas</label>
+                    <textarea id="vulns" placeholder="Descripción de vulnerabilidades, exploits, CVE relacionados"></textarea>
+                </section>
+
+                <section class="card section">
+                    <label for="mitigacion">Mitigación / Recomendaciones</label>
+                    <textarea id="mitigacion" placeholder="Controles, parches, hardening, contramedidas"></textarea>
+                </section>
+
+                <section class="card section">
+                    <label for="ejercicios">Ejercicios y prácticas para casa</label>
+                    <textarea id="ejercicios" placeholder="Tareas, pruebas a replicar, retos"></textarea>
+                </section>
+
+                <section class="card section">
+                    <label for="referencias">Referencias / Enlaces</label>
+                    <textarea id="referencias" placeholder="Artículos, documentación, GitHub, videos"></textarea>
+                </section>
+            </main>
+
+            <aside>
+                <div class="card section">
+                    <label for="prioridad">Prioridad / Dificultad</label>
+                    <select id="prioridad">
+            <option value="baja">Baja</option>
+            <option value="media">Media</option>
+            <option value="alta">Alta</option>
+          </select>
+                </div>
+
+                <div class="card section">
+                    <label>Checklist rápida</label>
+                    <div class="list">
+                        <label><input type="checkbox" id="chk-cve"> Referencia CVE</label>
+                        <label><input type="checkbox" id="chk-pt"> Práctica en laboratorio</label>
+                        <label><input type="checkbox" id="chk-report"> Redactar informe</label>
+                    </div>
+                </div>
+
+                <div class="card section">
+                    <label for="tags">Etiquetas</label>
+                    <div class="tags" id="tags"></div>
+                    <input id="tag-input" type="text" placeholder="Añadir etiqueta y Enter" />
+                </div>
+
+                <div class="card section">
+                    <label for="files">Adjuntar archivos / capturas</label>
+                    <input id="files" type="file" multiple accept="image/*,.png,.jpg,.jpeg,.pdf,.txt" />
+                    <div class="file-preview" id="preview"></div>
+                </div>
+
+                <div class="card section">
+                    <label>Quick export</label>
+                    <div class="actions">
+                        <button id="save-local">Guardar local</button>
+                        <button id="clear" class="ghost">Limpiar</button>
+                    </div>
+                    <div class="small" style="margin-top:8px">Exporta a Markdown para usar en repositorio / notas.</div>
+                </div>
+            </aside>
+        </div>
+
+        <footer style="margin-top:18px;display:flex;justify-content:space-between;align-items:center">
+            <div class="small">Plantilla generada para uso educativo — adapta los campos a tu curso.</div>
+            <div class="small">Consejo: exporta a Markdown y súbelo a tu repo para versión y control.</div>
+        </footer>
+    </div>
+
+    <script>
+        // util
+        const $ = id => document.getElementById(id);
+
+        // Tags
+        const tagsEl = $('tags'),
+            tagInput = $('tag-input');
+        let tags = [];
+        tagInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter' && tagInput.value.trim()) {
+                e.preventDefault();
+                addTag(tagInput.value.trim());
+                tagInput.value = '';
+            }
+        });
+
+        function addTag(t) {
+            tags.push(t);
+            renderTags();
+        }
+
+        function renderTags() {
+            tagsEl.innerHTML = '';
+            tags.forEach((t, i) => {
+                const span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = t;
+                span.title = 'Haz clic para eliminar';
+                span.onclick = () => {
+                    tags.splice(i, 1);
+                    renderTags();
+                };
+                tagsEl.appendChild(span);
+            })
+        }
+
+        // Files preview
+        const filesIn = $('files'),
+            preview = $('preview');
+        filesIn.addEventListener('change', () => {
+            preview.innerHTML = '';
+            Array.from(filesIn.files).forEach(f => {
+                const p = document.createElement('div');
+                p.style.marginBottom = '8px';
+                if (f.type.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.style.maxWidth = '100%';
+                    img.style.borderRadius = '6px';
+                    img.src = URL.createObjectURL(f);
+                    p.appendChild(img);
+                } else {
+                    p.textContent = f.name + ' (' + Math.round(f.size / 1024) + ' KB)';
+                }
+                preview.appendChild(p);
+            })
+        });
+
+        // Export helpers
+        function gather() {
+            return {
+                fecha: $('fecha').value || new Date().toISOString().slice(0, 10),
+                clase: $('clase').value,
+                objetivos: $('objetivos').value,
+                resumen: $('resumen').value,
+                conceptos: $('conceptos').value,
+                comandos: $('comandos').value,
+                vulnerabilidades: $('vulns').value,
+                mitigacion: $('mitigacion').value,
+                ejercicios: $('ejercicios').value,
+                referencias: $('referencias').value,
+                prioridad: $('prioridad').value,
+                checklist: {
+                    cve: $('chk-cve').checked,
+                    laboratorio: $('chk-pt').checked,
+                    informe: $('chk-report').checked
+                },
+                tags: tags,
+                files: Array.from(filesIn.files).map(f => ({
+                    name: f.name,
+                    size: f.size,
+                    type: f.type
+                }))
+            };
+        }
+
+        function download(filename, content, mime = 'text/plain') {
+            const a = document.createElement('a');
+            const blob = new Blob([content], {
+                type: mime
+            });
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        function toMarkdown(data) {
+            return `# Clase ${data.clase || ''} — ${data.fecha}\n\n` +
+                `## Objetivos\n${data.objetivos || '-'}\n\n` +
+                `## Resumen\n${data.resumen || '-'}\n\n` +
+                `## Conceptos clave\n${data.conceptos || '-'}\n\n` +
+                `## Comandos / Laboratorio\n\n\`\`\`bash\n${data.comandos || ''}\n\`\`\`\n\n` +
+                `## Vulnerabilidades observadas\n${data.vulnerabilidades || '-'}\n\n` +
+                `## Mitigación / Recomendaciones\n${data.mitigacion || '-'}\n\n` +
+                `## Ejercicios\n${data.ejercicios || '-'}\n\n` +
+                `## Referencias\n${data.referencias || '-'}\n\n` +
+                `**Prioridad:** ${data.prioridad}\n` +
+                `**Checklist:** CVE: ${data.checklist.cve} | Laboratorio: ${data.checklist.laboratorio} | Informe: ${data.checklist.informe}\n` +
+                `**Tags:** ${data.tags.join(', ')}\n` +
+                `**Archivos adjuntos (listado):**\n${data.files.map(f=>'- '+f.name+' ('+Math.round(f.size/1024)+' KB)').join('\n')}\n`;
+        }
+
+        // Buttons
+        $('export-md').addEventListener('click', () => {
+            const md = toMarkdown(gather());
+            download(`apuntes_${gather().fecha}_${(gather().clase||'sin-nombre').replace(/\s+/g,'_')}.md`, md, 'text/markdown');
+        });
+        $('export-json').addEventListener('click', () => {
+            download(`apuntes_${gather().fecha}.json`, JSON.stringify(gather(), null, 2), 'application/json');
+        });
+        $('save-local').addEventListener('click', () => {
+            localStorage.setItem('apuntes_ciber', JSON.stringify(gather()));
+            alert('Guardado localmente en el navegador.');
+        });
+        $('clear').addEventListener('click', () => {
+            if (confirm('Limpiar todos los campos?')) location.reload();
+        });
+        $('print').addEventListener('click', () => window.print());
+
+        // load last
+        window.addEventListener('load', () => {
+            const last = localStorage.getItem('apuntes_ciber');
+            if (last) {
+                try {
+                    if (confirm('Cargar los apuntes guardados en local?')) {
+                        const data = JSON.parse(last);
+                        $('fecha').value = data.fecha;
+                        $('clase').value = data.clase;
+                        $('objetivos').value = data.objetivos;
+                        $('resumen').value = data.resumen;
+                        $('conceptos').value = data.conceptos;
+                        $('comandos').value = data.comandos;
+                        $('vulns').value = data.vulnerabilidades;
+                        $('mitigacion').value = data.mitigacion;
+                        $('ejercicios').value = data.ejercicios;
+                        $('referencias').value = data.referencias;
+                        $('prioridad').value = data.prioridad;
+                        $('chk-cve').checked = data.checklist.cve;
+                        $('chk-pt').checked = data.checklist.laboratorio;
+                        $('chk-report').checked = data.checklist.informe;
+                        tags = data.tags || [];
+                        renderTags();
+                    }
+                } catch (e) {}
+            }
+            // set today's date by default
+            if (!$('fecha').value) $('fecha').value = new Date().toISOString().slice(0, 10);
+        });
+    </script>
+</body>
+
+</html>

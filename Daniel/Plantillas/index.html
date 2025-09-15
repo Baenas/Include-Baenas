@@ -394,55 +394,23 @@
 
         imprimirBtn.addEventListener('click', () => window.print());
 
+        async function guardarEnGitHubWorkflow(fecha, contenido) {
+            const resp = await fetch("/api/dispatch", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fecha,
+                    markdown: contenido
+                })
+            });
 
-        const GITHUB_USER = "baenas"; // tu usuario de GitHub
-        const GITHUB_REPO = "Include-Baenas"; // repo donde guardarás las notas
-        const GITHUB_BRANCH = "main"; // rama
-        const GITHUB_TOKEN = "TU_TOKEN_AQUI"; // ⚠️ NO COMPARTIR
-
-        async function guardarEnGitHub(fecha, contenido) {
-            const path = `notas/${fecha}.md`;
-
-            // 1. Verificar si ya existe el archivo (para obtener su SHA)
-            let sha;
-            try {
-                const resp = await fetch(
-                    `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`, {
-                        headers: {
-                            Authorization: `token ${GITHUB_TOKEN}`
-                        }
-                    }
-                );
-                if (resp.ok) {
-                    const data = await resp.json();
-                    sha = data.sha;
-                }
-            } catch (e) {
-                sha = undefined;
-            }
-
-            // 2. Hacer el commit
-            const resp = await fetch(
-                `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`, {
-                    method: "PUT",
-                    headers: {
-                        "Authorization": `token ${GITHUB_TOKEN}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        message: `Notas de la sesión ${fecha}`,
-                        content: btoa(unescape(encodeURIComponent(contenido))), // base64
-                        branch: GITHUB_BRANCH,
-                        sha: sha
-                    })
-                }
-            );
-
-            const result = await resp.json();
+            const data = await resp.json();
             if (resp.ok) {
-                alert("✅ Notas subidas a GitHub: " + result.content.path);
+                alert("✅ " + data.msg);
             } else {
-                alert("❌ Error: " + JSON.stringify(result));
+                alert("❌ Error: " + JSON.stringify(data.err));
             }
         }
 
@@ -452,7 +420,7 @@
             const fechaISO = new Date().toISOString().slice(0, 10);
             const md = `# Sesión - ${s.fecha}\n\n## Objetivos\n${s.objetivos}\n\n## Resumen / Notas\n${s.resumen}\n\n## Conceptos clave\n${s.conceptos}\n\n## Ejercicios\n${s.ejercicios}\n\n## Referencias\n${s.referencias}\n\n## Etiquetas\n${s.etiquetas}\n\n## Detalles técnicos\n${s.detalles}\n`;
 
-            await guardarEnGitHub(fechaISO, md);
+            await guardarEnGitHubWorkflow(fechaISO, md);
         });
     </script>
 </body>

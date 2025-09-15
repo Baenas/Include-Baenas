@@ -1,0 +1,23 @@
+name: Guardar notas
+
+on:
+  workflow_dispatch:
+    inputs:
+      fecha:
+        required: true
+      markdown:
+        required: true
+
+jobs:
+  commit-nota:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir -p notas
+          echo "${{ github.event.inputs.markdown }}" > "notas/${{ github.event.inputs.fecha }}.md"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add notas/
+          git commit -m "Notas de la sesión ${{ github.event.inputs.fecha }}"
+          git push

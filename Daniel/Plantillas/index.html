@@ -395,7 +395,7 @@
         imprimirBtn.addEventListener('click', () => window.print());
 
         async function guardarEnGitHubWorkflow(fecha, contenido) {
-            const resp = await fetch("/api/dispatch", {
+            const resp = await fetch("../api/dispatch", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
